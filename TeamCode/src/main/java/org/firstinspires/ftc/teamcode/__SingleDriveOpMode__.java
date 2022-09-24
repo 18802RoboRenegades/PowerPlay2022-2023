@@ -23,7 +23,9 @@ import com.qualcomm.robotcore.hardware.Servo;
     private double TurnSpeed = 1;
     private double ArmSensitivity = 1;
     private double ArmSensitivity2 = 1;
-    private boolean HandIsOpen = false;
+    private boolean HandIsOpen = true;
+    double arm2Position = 0;
+    double arm2speed = 0;
     private LinearOpMode myOpMode;
 
     public void runOpMode()
@@ -50,6 +52,7 @@ import com.qualcomm.robotcore.hardware.Servo;
         double rightPower = 0;
         double servoPosition = 0;
 
+
         while (opModeIsActive()) {
             stickDrive = this.gamepad1.left_stick_y * DriveSpeed;
             turn = this.gamepad1.right_stick_x * TurnSpeed;
@@ -60,6 +63,28 @@ import com.qualcomm.robotcore.hardware.Servo;
                 DriveSpeed = .4;
             } else {
                 DriveSpeed = 1;
+            }
+
+            if(this.gamepad1.dpad_up) {
+                servoPosition = servoPosition - 0.0007;
+                if (servoPosition < -0.9)   servoPosition = -0.9;
+            } else if(this.gamepad1.dpad_down) {
+                servoPosition = servoPosition + 0.0007;
+                if(servoPosition > 0) servoPosition = 0;
+            }
+            scout.armVerticalServo.setPower(servoPosition);
+
+            if(this.gamepad1.y) {
+                arm2Position = arm2Position - arm2speed;
+                if (arm2Position < -0.9)   arm2Position = -0.9;
+            } else if(this.gamepad1.a) {
+                arm2Position = arm2Position + arm2speed;
+                if(arm2Position > 0) arm2Position = 0;
+            }
+            scout.armServo2.setPosition(servoPosition);
+
+            if(this.gamepad1.x) {
+                drive.Clawwww(HandIsOpen);
             }
 
             drive.Drive(stickDrive, turn);

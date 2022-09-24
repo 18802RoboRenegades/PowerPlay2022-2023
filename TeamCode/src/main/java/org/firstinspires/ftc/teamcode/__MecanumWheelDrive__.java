@@ -28,6 +28,7 @@ public class __MecanumWheelDrive__ extends LinearOpMode
     private double DriveSpeed = 1;
     private double TurnSpeed = 1;
     private double StrafeSpeed = 1;
+    private boolean HandIsOpen = true;
     private LinearOpMode myOpMode;
     //private ElapsedTime runtime = new ElapsedTime();
 
@@ -35,6 +36,8 @@ public class __MecanumWheelDrive__ extends LinearOpMode
     {
 
         double servoPosition = 0;
+        double arm2Position = 0;
+        double arm2speed = 0;
         if (scout == null)
         {
             scout = new Hardware3();
@@ -62,17 +65,28 @@ public class __MecanumWheelDrive__ extends LinearOpMode
 
 
 
-            /**if(this.gamepad2.dpad_up) {
+            if(this.gamepad2.dpad_up) {
                 servoPosition = servoPosition - 0.0007;
                 if (servoPosition < -0.9)   servoPosition = -0.9;
             } else if(this.gamepad2.dpad_down) {
                 servoPosition = servoPosition + 0.0007;
                 if(servoPosition > 0) servoPosition = 0;
-            } else if(this.gamepad2.b) {
-                servoPosition = -0.271;
             }
             scout.armVerticalServo.setPower(servoPosition);
-**/
+
+            if(this.gamepad2.y) {
+                arm2Position = arm2Position - arm2speed;
+                if (arm2Position < -0.9)   arm2Position = -0.9;
+            } else if(this.gamepad2.a) {
+                arm2Position = arm2Position + arm2speed;
+                if(arm2Position > 0) arm2Position = 0;
+            }
+            scout.armServo2.setPosition(servoPosition);
+
+            if(this.gamepad1.x) {
+                drive.Clawwww(HandIsOpen);
+            }
+
 
             drive.StrafeDrive(stickDrive, turn, strafe);
             telemetry.addData("Status", "Running");

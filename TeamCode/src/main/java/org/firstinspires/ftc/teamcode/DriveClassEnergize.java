@@ -56,6 +56,8 @@ public class DriveClassEnergize {
         double rightFrontEncoderStart = scout.rightFrontWheelMotor.getCurrentPosition();
         double rightRearEncoderStart = scout.rightRearWheelMotor.getCurrentPosition();
 
+        boolean isClawOpen = true;
+
         double averageEncoderReading = 0;
         while (Math.abs(averageEncoderReading) < Math.abs(scout.TICKS_PER_INCH * inches)){
 
@@ -140,15 +142,15 @@ public class DriveClassEnergize {
         scout.rightRearWheelMotor.setPower(-rightPower + strafePower);
     }
 
-    public void ClawMove(boolean openTrueOrCloseFalse){
-        if (openTrueOrCloseFalse == true) {
-            scout.clawServo.setPosition(0);
-        }
-        else if (openTrueOrCloseFalse == false) {
-            scout.clawServo.setPosition(0);
+    public void Clawwww(boolean putAtrueBooleanHere) {
+        if (putAtrueBooleanHere == true) {
+            scout.clawServo.setPosition(0); // NEEDS A VALUE FOR THE POSITION OF THE CLOSED CLAW!
+        } else if (putAtrueBooleanHere == false){
+            scout.clawServo.setPosition(0); //NEEDS A VALUE FOR THE POSITION OF THE OPEN CLAW!
         }
     }
 
-
-
+    public void Arm2Move(double power) {
+        scout.armServo2.setPosition(power);
+    }
 }

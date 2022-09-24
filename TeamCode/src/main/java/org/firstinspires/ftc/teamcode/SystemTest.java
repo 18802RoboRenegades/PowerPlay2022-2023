@@ -113,7 +113,7 @@ public class SystemTest extends LinearOpMode {
                 tempPosition = tempPosition - 0.005;
             }
 
-            telemetry.addData("Arm2Servo position = ", tempPosition);
+            telemetry.addData("Claw servo position = ", scout.clawServo.getPosition());
             telemetry.addData("gyro Sensor = ", scout.gyro.getAngularOrientation().firstAngle);
             telemetry.addData("Right Front Encoder = ", scout.rightFrontWheelMotor.getCurrentPosition());
             telemetry.addData("Right Rear Encoder = ", scout.rightRearWheelMotor.getCurrentPosition());
