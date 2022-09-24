@@ -43,7 +43,7 @@ public class SystemTest extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor leftDrive = null;
     private DcMotor rightDrive = null;
-    private Hardware2 scout = new Hardware2();
+    private Hardware3 scout = new Hardware3();
 
     @Override
     public void runOpMode() {
@@ -113,7 +113,6 @@ public class SystemTest extends LinearOpMode {
                 tempPosition = tempPosition - 0.005;
             }
 
-            scout.servoClockwiseVAS.setPosition(tempPosition);
             telemetry.addData("Arm2Servo position = ", tempPosition);
             telemetry.addData("gyro Sensor = ", scout.gyro.getAngularOrientation().firstAngle);
             telemetry.addData("Right Front Encoder = ", scout.rightFrontWheelMotor.getCurrentPosition());

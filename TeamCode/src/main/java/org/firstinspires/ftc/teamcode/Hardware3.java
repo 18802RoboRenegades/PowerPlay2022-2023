@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
+import com.qualcomm.robotcore.hardware.CRServoImpl;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -12,8 +13,10 @@ public class Hardware3 {
     public DcMotor rightFrontWheelMotor;
     public DcMotor leftRearWheelMotor;
     public DcMotor rightRearWheelMotor;
-    public DcMotor elevatorMotor;
+    //public DcMotor elevatorMotor;
     public Servo clawServo;
+    public CRServoImpl armVerticalServo;
+    public Servo armServo2;
 
     public BNO055IMU gyro;
     //public SensorColor colorSensor;
@@ -30,7 +33,9 @@ public class Hardware3 {
         rightFrontWheelMotor = hardwareMap.get(DcMotor.class, "rightFront");
         leftRearWheelMotor = hardwareMap.get(DcMotor.class, "leftRear");
         rightRearWheelMotor = hardwareMap.get(DcMotor.class, "rightRear");
-        elevatorMotor = hardwareMap.get(DcMotor.class, "elevatorMotor");
+        armVerticalServo = hardwareMap.get(CRServoImpl.class, "armVerticalServo");
+        armServo2 = hardwareMap.get(Servo.class, "armServo2");
+        //elevatorMotor = hardwareMap.get(DcMotor.class, "elevatorMotor");
         clawServo = hardwareMap.get(Servo.class, "clawServo");
 
         //Defining sensors
@@ -71,6 +76,9 @@ public class Hardware3 {
         leftRearWheelMotor.setDirection(DcMotor.Direction.REVERSE);
         rightFrontWheelMotor.setDirection(DcMotor.Direction.FORWARD);
         rightRearWheelMotor.setDirection(DcMotor.Direction.FORWARD);
-    }
 
+        // setting the select servos to position 0
+        clawServo.setPosition(0);
+
+    }
 }

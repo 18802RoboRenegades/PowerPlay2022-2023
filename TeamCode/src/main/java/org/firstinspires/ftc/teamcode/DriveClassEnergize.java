@@ -140,5 +140,15 @@ public class DriveClassEnergize {
         scout.rightRearWheelMotor.setPower(-rightPower + strafePower);
     }
 
+    public void ClawMove(boolean openTrueOrCloseFalse){
+        if (openTrueOrCloseFalse == true) {
+            scout.clawServo.setPosition(0);
+        }
+        else if (openTrueOrCloseFalse == false) {
+            scout.clawServo.setPosition(0);
+        }
+    }
+
+
 
 }

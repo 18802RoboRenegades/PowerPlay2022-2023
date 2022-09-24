@@ -18,7 +18,7 @@ import com.qualcomm.robotcore.hardware.Servo;
     private DistanceSensor sensorColorRange;
     private Servo servoTest;
     // The line of code below is defining the robot.
-    private Hardware2 scout = new Hardware2();
+    private Hardware3 scout = new Hardware3();
     private double DriveSpeed = 1;
     private double TurnSpeed = 1;
     private double ArmSensitivity = 1;
@@ -30,10 +30,10 @@ import com.qualcomm.robotcore.hardware.Servo;
     {
         if (scout == null)
         {
-            scout = new Hardware2();
+            scout = new Hardware3();
         }
         scout.init(hardwareMap);
-        DriveClass drive = new DriveClass(scout, myOpMode);
+        DriveClassEnergize drive = new DriveClassEnergize(scout, myOpMode);
         telemetry.addData("Status:", "Initialized");
         telemetry.update();
         // Wait for the game to start (driver presses PLAY)
@@ -60,43 +60,6 @@ import com.qualcomm.robotcore.hardware.Servo;
                 DriveSpeed = .4;
             } else {
                 DriveSpeed = 1;
-            }
-
-
-            if (this.gamepad1.right_bumper) {
-                drive.Intake(1);
-            } else if (this.gamepad1.left_bumper) {
-                drive.Intake(-1);
-            } else {
-                drive.Intake(0);
-            }
-
-            if (this.gamepad1.dpad_right) {
-                drive.CarouselRight();
-            } else if (this.gamepad1.dpad_left) {
-                drive.CarouselLeft();
-            } else {
-                drive.StopCarousel();
-            }
-
-            if(this.gamepad1.dpad_up) {
-                servoPosition = servoPosition - 0.0007;
-                if (servoPosition < -0.9)   servoPosition = -0.9;
-            } else if(this.gamepad1.dpad_down) {
-                servoPosition = servoPosition + 0.0007;
-                if(servoPosition > 0) servoPosition = 0;
-            } else if(this.gamepad1.b) {
-                servoPosition = -0.271;
-            }
-
-            scout.armVerticalServo.setPower(servoPosition);
-
-            if(this.gamepad1.y) {
-                drive.CappingServo(0.5);
-            } else if(this.gamepad1.a) {
-                drive.CappingServo(-0.5);
-            } else {
-                drive.CappingServo(0);
             }
 
             drive.Drive(stickDrive, turn);

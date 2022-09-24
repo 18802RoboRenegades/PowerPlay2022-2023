@@ -24,7 +24,7 @@ public class __MecanumWheelDrive__ extends LinearOpMode
     private DistanceSensor sensorColorRange;
     private Servo servoTest;
     // The line of code below is defining the robot.
-    private Hardware2 scout = new Hardware2();
+    private Hardware3 scout = new Hardware3();
     private double DriveSpeed = 1;
     private double TurnSpeed = 1;
     private double StrafeSpeed = 1;
@@ -37,10 +37,10 @@ public class __MecanumWheelDrive__ extends LinearOpMode
         double servoPosition = 0;
         if (scout == null)
         {
-            scout = new Hardware2();
+            scout = new Hardware3();
         }
         scout.init(hardwareMap);
-        DriveClass drive = new DriveClass(scout, myOpMode);
+        DriveClassEnergize drive = new DriveClassEnergize(scout, myOpMode);
         telemetry.addData("Status:", "Initialized");
         telemetry.update();
         // Wait for the game to start (driver presses PLAY)
@@ -60,6 +60,19 @@ public class __MecanumWheelDrive__ extends LinearOpMode
             turn = this.gamepad1.right_stick_x * TurnSpeed;
             strafe = this.gamepad1.left_stick_x * StrafeSpeed;
 
+
+
+            /**if(this.gamepad2.dpad_up) {
+                servoPosition = servoPosition - 0.0007;
+                if (servoPosition < -0.9)   servoPosition = -0.9;
+            } else if(this.gamepad2.dpad_down) {
+                servoPosition = servoPosition + 0.0007;
+                if(servoPosition > 0) servoPosition = 0;
+            } else if(this.gamepad2.b) {
+                servoPosition = -0.271;
+            }
+            scout.armVerticalServo.setPower(servoPosition);
+**/
 
             drive.StrafeDrive(stickDrive, turn, strafe);
             telemetry.addData("Status", "Running");
