@@ -119,38 +119,35 @@ public class DriveClassEnergize {
         return -scout.gyro.getAngularOrientation().firstAngle;
     }
 
-    public void Drive(double drive, double turn) {
-        double leftPower    = -Range.clip(drive - turn, -scout.MAX_DRIVING_POWER, scout.MAX_DRIVING_POWER);
-        double rightPower   = Range.clip(drive + turn, -scout.MAX_DRIVING_POWER, scout.MAX_DRIVING_POWER);
-
-
-        scout.leftFrontWheelMotor.setPower(leftPower);
-        scout.leftRearWheelMotor.setPower(leftPower);
-        scout.rightFrontWheelMotor.setPower(-rightPower);
-        scout.rightRearWheelMotor.setPower(-rightPower);
-    }
-
     public void StrafeDrive(double drive, double turn, double strafe) {
 
-        double leftPower    = -Range.clip(drive + turn, -scout.MAX_DRIVING_POWER, scout.MAX_DRIVING_POWER);
-        double rightPower   = Range.clip(drive - turn, -scout.MAX_DRIVING_POWER, scout.MAX_DRIVING_POWER);
-        double strafePower = Range.clip( strafe, -scout.MAX_DRIVING_POWER, scout.MAX_DRIVING_POWER);
+        double leftPower    = -Range.clip(drive - turn, -scout.MAX_DRIVING_POWER, scout.MAX_DRIVING_POWER);
+        double rightPower   = -Range.clip(drive + turn, -scout.MAX_DRIVING_POWER, scout.MAX_DRIVING_POWER);
+        double strafePower = Range.clip(-strafe, -scout.MAX_DRIVING_POWER, scout.MAX_DRIVING_POWER);
 
         scout.leftFrontWheelMotor.setPower(leftPower - strafePower);
-        scout.leftRearWheelMotor.setPower(-rightPower - strafePower);
-        scout.rightFrontWheelMotor.setPower(leftPower + strafePower);
-        scout.rightRearWheelMotor.setPower(-rightPower + strafePower);
+        scout.leftRearWheelMotor.setPower(leftPower + strafePower);
+        scout.rightFrontWheelMotor.setPower(rightPower + strafePower);
+        scout.rightRearWheelMotor.setPower(rightPower - strafePower);
     }
+
+    /**
+     *          double leftPower    = -Range.clip(drive + turn, -maxDrivingPower, maxDrivingPower) ;
+     *         double rightPower   = Range.clip(drive - turn, -maxDrivingPower, maxDrivingPower) ;
+     *         double strafePower = Range.clip( strafe, -maxDrivingPower, maxDrivingPower );
+     *
+     *         this.LeftFrontWheelMotor.setPower(leftPower - strafePower);
+     *         this.LeftRearWheelMotor.setPower(rightPower - strafePower);
+     *         this.RightFrontWheelMotor.setPower(leftPower + strafePower);
+     *         this.RightRearWheelMotor.setPower(rightPower + strafePower);
+     */
 
     public void Clawwww(boolean putAtrueBooleanHere) {
         if (putAtrueBooleanHere == true) {
             scout.clawServo.setPosition(0); // NEEDS A VALUE FOR THE POSITION OF THE CLOSED CLAW!
         } else if (putAtrueBooleanHere == false){
-            scout.clawServo.setPosition(0); //NEEDS A VALUE FOR THE POSITION OF THE OPEN CLAW!
+            scout.clawServo.setPosition(0.42); //NEEDS A VALUE FOR THE POSITION OF THE OPEN CLAW!
         }
     }
 
-    public void Arm2Move(double power) {
-        scout.armServo2.setPosition(power);
-    }
 }

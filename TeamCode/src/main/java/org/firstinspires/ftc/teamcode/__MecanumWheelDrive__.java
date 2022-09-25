@@ -28,7 +28,8 @@ public class __MecanumWheelDrive__ extends LinearOpMode
     private double DriveSpeed = 1;
     private double TurnSpeed = 1;
     private double StrafeSpeed = 1;
-    private boolean HandIsOpen = true;
+    private boolean HandIsOpen = false;
+    double ArmVerticalPower = 0;
     private LinearOpMode myOpMode;
     //private ElapsedTime runtime = new ElapsedTime();
 
@@ -74,17 +75,25 @@ public class __MecanumWheelDrive__ extends LinearOpMode
             }
             scout.armVerticalServo.setPower(servoPosition);
 
-            if(this.gamepad2.y) {
-                arm2Position = arm2Position - arm2speed;
-                if (arm2Position < -0.9)   arm2Position = -0.9;
-            } else if(this.gamepad2.a) {
-                arm2Position = arm2Position + arm2speed;
-                if(arm2Position > 0) arm2Position = 0;
+            if(this.gamepad1.y) {
+                ArmVerticalPower -= 0.01;
+                if(ArmVerticalPower < -1) ArmVerticalPower = -1;
+            } else if(this.gamepad1.a) {
+                ArmVerticalPower += 0.01;
+                if(ArmVerticalPower > 1) ArmVerticalPower = 1;
             }
-            scout.armServo2.setPosition(servoPosition);
+            scout.armServo2.setPower(ArmVerticalPower);
 
-            if(this.gamepad1.x) {
-                drive.Clawwww(HandIsOpen);
+            if(this.gamepad2.x) {
+                if (HandIsOpen == true) {
+                    scout.clawServo.setPosition(0); // NEEDS A VALUE FOR THE POSITION OF THE CLOSED CLAW!
+                    HandIsOpen = false;
+                    sleep(300);
+                } else if (HandIsOpen == false){
+                    scout.clawServo.setPosition(0.42); //NEEDS A VALUE FOR THE POSITION OF THE OPEN CLAW!
+                    HandIsOpen = true;
+                    sleep(300);
+                }
             }
 
 

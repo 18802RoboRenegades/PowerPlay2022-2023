@@ -16,7 +16,7 @@ public class Hardware3 {
     //public DcMotor elevatorMotor;
     public Servo clawServo;
     public CRServoImpl armVerticalServo;
-    public Servo armServo2;
+    public CRServoImpl armServo2;
 
     public BNO055IMU gyro;
     //public SensorColor colorSensor;
@@ -34,7 +34,7 @@ public class Hardware3 {
         leftRearWheelMotor = hardwareMap.get(DcMotor.class, "leftRear");
         rightRearWheelMotor = hardwareMap.get(DcMotor.class, "rightRear");
         armVerticalServo = hardwareMap.get(CRServoImpl.class, "armVerticalServo");
-        armServo2 = hardwareMap.get(Servo.class, "armServo2");
+        armServo2 = hardwareMap.get(CRServoImpl.class, "armServo2");
         //elevatorMotor = hardwareMap.get(DcMotor.class, "elevatorMotor");
         clawServo = hardwareMap.get(Servo.class, "clawServo");
 
@@ -54,6 +54,7 @@ public class Hardware3 {
         rightFrontWheelMotor.setPower(0);
         leftRearWheelMotor.setPower(0);
         rightRearWheelMotor.setPower(0);
+        armServo2.setPower(0);
 
         rightFrontWheelMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftFrontWheelMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -79,6 +80,7 @@ public class Hardware3 {
 
         // setting the select servos to position 0
         clawServo.setPosition(0);
+
 
     }
 }

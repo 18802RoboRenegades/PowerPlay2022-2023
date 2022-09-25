@@ -44,6 +44,7 @@ public class SystemTest extends LinearOpMode {
     private DcMotor leftDrive = null;
     private DcMotor rightDrive = null;
     private Hardware3 scout = new Hardware3();
+    private double servoPosition = 0;
 
     @Override
     public void runOpMode() {
@@ -105,13 +106,14 @@ public class SystemTest extends LinearOpMode {
             }
              **/
 
-            if(gamepad1.y){
-
-            } else if(gamepad1.b){
-                tempPosition = tempPosition+0.005;
-            } else if(gamepad1.a){
-                tempPosition = tempPosition - 0.005;
+            if(this.gamepad1.y) {
+                servoPosition += 0.01;
+            } else if (this.gamepad1.a){
+                servoPosition -= 0.01;
+            } else {
+                servoPosition = servoPosition;
             }
+            scout.clawServo.setPosition(servoPosition);
 
             telemetry.addData("Claw servo position = ", scout.clawServo.getPosition());
             telemetry.addData("gyro Sensor = ", scout.gyro.getAngularOrientation().firstAngle);

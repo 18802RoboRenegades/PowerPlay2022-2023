@@ -23,7 +23,7 @@ import com.qualcomm.robotcore.hardware.Servo;
     private double TurnSpeed = 1;
     private double ArmSensitivity = 1;
     private double ArmSensitivity2 = 1;
-    private boolean HandIsOpen = true;
+    private boolean HandIsOpen = false;
     double arm2Position = 0;
     double arm2speed = 0;
     private LinearOpMode myOpMode;
@@ -56,7 +56,7 @@ import com.qualcomm.robotcore.hardware.Servo;
         while (opModeIsActive()) {
             stickDrive = this.gamepad1.left_stick_y * DriveSpeed;
             turn = this.gamepad1.right_stick_x * TurnSpeed;
-            //strafe = this.gamepad1.left_stick_x * DriveSpeed;
+            strafe = this.gamepad1.left_stick_x * DriveSpeed;
 
 
             if (this.gamepad1.left_stick_button) {
@@ -75,19 +75,30 @@ import com.qualcomm.robotcore.hardware.Servo;
             scout.armVerticalServo.setPower(servoPosition);
 
             if(this.gamepad1.y) {
-                arm2Position = arm2Position - arm2speed;
-                if (arm2Position < -0.9)   arm2Position = -0.9;
+                ArmVerticalPower -= 0.001;
+                if(ArmVerticalPower < -1) ArmVerticalPower = -1;
             } else if(this.gamepad1.a) {
-                arm2Position = arm2Position + arm2speed;
-                if(arm2Position > 0) arm2Position = 0;
+                ArmVerticalPower += 0.001;
+                if(ArmVerticalPower > 1) ArmVerticalPower = 1;
             }
-            scout.armServo2.setPosition(servoPosition);
+            scout.armServo2.setPower(ArmVerticalPower);
+
 
             if(this.gamepad1.x) {
-                drive.Clawwww(HandIsOpen);
+                if (HandIsOpen == true) {
+                    scout.clawServo.setPosition(0); // NEEDS A VALUE FOR THE POSITION OF THE CLOSED CLAW!
+                    HandIsOpen = false;
+                    sleep(300);
+                } else if (HandIsOpen == false){
+                    HandIsOpen = true;
+                    scout.clawServo.setPosition(0.42); //NEEDS A VALUE FOR THE POSITION OF THE OPEN CLAW!
+                    sleep(300);
+                }
             }
 
-            drive.Drive(stickDrive, turn);
+            drive.StrafeDrive(stickDrive, turn, strafe);
+            telemetry.addData("Arm 2 Power = ", ArmVerticalPower);
+            telemetry.addData("Arm 2 Actual power = ", scout.armServo2.getPower());
             telemetry.addData("Status", "Running");
             telemetry.addData("Left Power", leftPower);
             telemetry.addData("Right Power", rightPower);
