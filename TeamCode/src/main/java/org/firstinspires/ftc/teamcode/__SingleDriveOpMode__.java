@@ -75,6 +75,19 @@ import com.qualcomm.robotcore.hardware.Servo;
             scout.armVerticalServo.setPower(servoPosition);
 
             if(this.gamepad1.y) {
+                scout.armServo2.setPower(-1);
+            } else if(this.gamepad1.a) {
+                scout.armServo2.setPower(0.5);
+            } else {
+                scout.armServo2.setPower(0);
+            }
+
+
+
+
+
+            /**
+            if(this.gamepad1.y) {
                 ArmVerticalPower -= 0.001;
                 if(ArmVerticalPower < -1) ArmVerticalPower = -1;
             } else if(this.gamepad1.a) {
@@ -82,7 +95,7 @@ import com.qualcomm.robotcore.hardware.Servo;
                 if(ArmVerticalPower > 1) ArmVerticalPower = 1;
             }
             scout.armServo2.setPower(ArmVerticalPower);
-
+            **/
 
             if(this.gamepad1.x) {
                 if (HandIsOpen == true) {
@@ -97,6 +110,8 @@ import com.qualcomm.robotcore.hardware.Servo;
             }
 
             drive.StrafeDrive(stickDrive, turn, strafe);
+            telemetry.addData("Arm 1 Position = ", servoPosition);
+            telemetry.addData("Arm 1 Power = ", scout.armVerticalServo.getPower());
             telemetry.addData("Arm 2 Power = ", ArmVerticalPower);
             telemetry.addData("Arm 2 Actual power = ", scout.armServo2.getPower());
             telemetry.addData("Status", "Running");

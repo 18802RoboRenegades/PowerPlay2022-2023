@@ -96,25 +96,6 @@ public class SystemTest extends LinearOpMode {
                 scout.rightRearWheelMotor.setPower(0);
             }
 
-            /**
-            if(gamepad1.y){
-                scout.servoClockwiseVAS.setPosition(scout.SERVO_ARM2_INIT);
-            } else if(gamepad1.b){
-                scout.servoClockwiseVAS.setPosition(scout.SERVO_ARM2_GRAB_POSITION);
-            } else if(gamepad1.a){
-                scout.servoClockwiseVAS.setPosition(scout.SERVO_ARM2_DROP_POSITION);
-            }
-             **/
-
-            if(this.gamepad1.y) {
-                servoPosition += 0.01;
-            } else if (this.gamepad1.a){
-                servoPosition -= 0.01;
-            } else {
-                servoPosition = servoPosition;
-            }
-            scout.clawServo.setPosition(servoPosition);
-
             telemetry.addData("Claw servo position = ", scout.clawServo.getPosition());
             telemetry.addData("gyro Sensor = ", scout.gyro.getAngularOrientation().firstAngle);
             telemetry.addData("Right Front Encoder = ", scout.rightFrontWheelMotor.getCurrentPosition());
