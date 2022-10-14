@@ -150,4 +150,11 @@ public class DriveClassEnergize {
         }
     }
 
+    public void trapdoorOpen() {
+        scout.trapdoorServo.setPosition(1);
+    }
+
+
+
+
 }

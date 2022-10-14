@@ -15,6 +15,7 @@ public class Hardware3 {
     public DcMotor rightRearWheelMotor;
     //public DcMotor elevatorMotor;
     public Servo clawServo;
+    public Servo trapdoorServo;
     public CRServoImpl armVerticalServo;
     public CRServoImpl armServo2;
 
@@ -37,6 +38,7 @@ public class Hardware3 {
         armServo2 = hardwareMap.get(CRServoImpl.class, "armServo2");
         //elevatorMotor = hardwareMap.get(DcMotor.class, "elevatorMotor");
         clawServo = hardwareMap.get(Servo.class, "clawServo");
+        trapdoorServo = hardwareMap.get(Servo.class, "trapdoorServo");
 
         //Defining sensors
         gyro = hardwareMap.get(BNO055IMU.class, "imu 1");
@@ -80,7 +82,7 @@ public class Hardware3 {
 
         // setting the select servos to position 0
         clawServo.setPosition(0);
-
+        trapdoorServo.setPosition(0);
 
     }
 }
