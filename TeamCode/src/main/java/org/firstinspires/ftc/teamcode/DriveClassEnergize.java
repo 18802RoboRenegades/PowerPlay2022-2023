@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -51,10 +52,10 @@ public class DriveClassEnergize {
         double leftRearDistance = 0;
         double rightFrontDistance = 0;
         double rightRearDistance = 0;
-        double leftFrontEncoderStart = scout.leftFrontWheelMotor.getCurrentPosition();
-        double leftRearEncoderStart = scout.leftRearWheelMotor.getCurrentPosition();
-        double rightFrontEncoderStart = scout.rightFrontWheelMotor.getCurrentPosition();
-        double rightRearEncoderStart = scout.rightRearWheelMotor.getCurrentPosition();
+        int leftFrontEncoderStart = scout.leftFrontWheelMotor.getCurrentPosition();
+        int leftRearEncoderStart = scout.leftRearWheelMotor.getCurrentPosition();
+        int rightFrontEncoderStart = scout.rightFrontWheelMotor.getCurrentPosition();
+        int rightRearEncoderStart = scout.rightRearWheelMotor.getCurrentPosition();
 
         boolean isClawOpen = true;
 
@@ -113,6 +114,47 @@ public class DriveClassEnergize {
         }
 
         halt();
+    }
+
+    public boolean PrecisionStrafe(double power, int inches)
+    {
+        // 1 tick = .44 inches.
+        // cir = 12.3 in
+        // ticksPerInch was 88
+        // ticksPerInch was 83
+
+        int ticksPerInch = 16;
+
+        scout.leftFrontWheelMotor.getCurrentPosition();
+        scout.rightFrontWheelMotor.getCurrentPosition();
+        scout.leftRearWheelMotor.getCurrentPosition();
+        scout.rightRearWheelMotor.getCurrentPosition();
+
+        scout.leftFrontWheelMotor.setTargetPosition(-inches * (ticksPerInch));
+        scout.leftRearWheelMotor.setTargetPosition(inches * ticksPerInch);
+        scout.rightFrontWheelMotor.setTargetPosition(inches * (ticksPerInch));
+        scout.rightRearWheelMotor.setTargetPosition(-inches * ticksPerInch);
+
+        scout.leftFrontWheelMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        scout.leftRearWheelMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        scout.rightFrontWheelMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        scout.rightRearWheelMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        scout.leftFrontWheelMotor.setPower(power);
+        scout.leftRearWheelMotor.setPower(power);
+        scout.rightFrontWheelMotor.setPower(power);
+        scout.rightRearWheelMotor.setPower(power);
+
+
+        while(scout.leftRearWheelMotor.isBusy()
+                || scout.leftFrontWheelMotor.isBusy()
+                || scout.rightFrontWheelMotor.isBusy()
+                || scout.rightRearWheelMotor.isBusy());
+        scout.rightFrontWheelMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        scout.leftFrontWheelMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        scout.rightRearWheelMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        scout.leftRearWheelMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        return  true;
     }
 
     public double GetGyroDegree() {

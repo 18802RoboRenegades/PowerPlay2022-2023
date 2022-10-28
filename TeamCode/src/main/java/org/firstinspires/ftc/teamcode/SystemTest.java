@@ -98,12 +98,12 @@ public class SystemTest extends LinearOpMode {
 
             //telemetry.addData("Claw servo position = ", scout.clawServo.getPosition());
             //telemetry.addData("gyro Sensor = ", scout.gyro.getAngularOrientation().firstAngle);
-            //telemetry.addData("Right Front Encoder = ", scout.rightFrontWheelMotor.getCurrentPosition());
-            //telemetry.addData("Right Rear Encoder = ", scout.rightRearWheelMotor.getCurrentPosition());
-            //telemetry.addData("Left Front Encoder = ", scout.leftFrontWheelMotor.getCurrentPosition());
-            //telemetry.addData("Left Rear Encoder = ", scout.leftRearWheelMotor.getCurrentPosition());
-            //telemetry.addData("Status", "Run Time: " + runtime.toString());
-            //telemetry.update();
+            telemetry.addData("Right Front Encoder = ", scout.rightFrontWheelMotor.getCurrentPosition());
+            telemetry.addData("Right Rear Encoder = ", scout.rightRearWheelMotor.getCurrentPosition());
+            telemetry.addData("Left Front Encoder = ", scout.leftFrontWheelMotor.getCurrentPosition());
+            telemetry.addData("Left Rear Encoder = ", scout.leftRearWheelMotor.getCurrentPosition());
+            telemetry.addData("Status", "Run Time: " + runtime.toString());
+            telemetry.update();
         }
     }
 }

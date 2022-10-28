@@ -25,7 +25,8 @@ public class Hardware3 {
     final public double ROTATION_POWER = 0.4;
     final public double MAX_DRIVING_POWER = 1;
     final public double CAROUSEL_POWER = 0.7;
-    final public double TICKS_PER_INCH = 14;
+    final public double TICKS_PER_INCH = 16;
+    final public double AUTONOMOUS_DRIVING_POWER = 0.5;
 
     public void init (HardwareMap hardwareMap)
     {
