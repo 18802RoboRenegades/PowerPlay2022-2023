@@ -77,9 +77,9 @@ import com.qualcomm.robotcore.hardware.Servo;
             if(this.gamepad1.y) {
                 scout.armServo2.setPower(-1);
             } else if(this.gamepad1.a) {
-                scout.armServo2.setPower(0.5);
+                scout.armServo2.setPower(0.3);
             } else {
-                scout.armServo2.setPower(0);
+                scout.armServo2.setPower(-0.065);
             }
 
 
@@ -110,6 +110,10 @@ import com.qualcomm.robotcore.hardware.Servo;
             }
 
             drive.StrafeDrive(stickDrive, turn, strafe);
+            telemetry.addData("Right Front Encoder = ", scout.rightFrontWheelMotor.getCurrentPosition());
+            telemetry.addData("Right Rear Encoder = ", scout.rightRearWheelMotor.getCurrentPosition());
+            telemetry.addData("Left Front Encoder = ", scout.leftFrontWheelMotor.getCurrentPosition());
+            telemetry.addData("Left Rear Encoder = ", scout.leftRearWheelMotor.getCurrentPosition());
             telemetry.addData("Arm 1 Position = ", servoPosition);
             telemetry.addData("Arm 1 Power = ", scout.armVerticalServo.getPower());
             telemetry.addData("Arm 2 Power = ", ArmVerticalPower);

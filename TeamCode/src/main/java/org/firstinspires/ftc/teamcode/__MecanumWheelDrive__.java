@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="__MecanumWheelDrive__", group="LinearOpMode")
 
@@ -35,7 +36,7 @@ public class __MecanumWheelDrive__ extends LinearOpMode
 
     public void runOpMode()
     {
-
+        double strafePower = 0;
         double servoPosition = 0;
         double arm2Position = 0;
         double arm2speed = 0;
@@ -60,7 +61,7 @@ public class __MecanumWheelDrive__ extends LinearOpMode
         double rightPower = 0;
 
         while (opModeIsActive()) {
-            stickDrive = this.gamepad1.left_stick_y * DriveSpeed;
+            stickDrive = gamepad1.left_stick_y * DriveSpeed;
             turn = this.gamepad1.right_stick_x * TurnSpeed;
             strafe = this.gamepad1.left_stick_x * StrafeSpeed;
 
@@ -75,29 +76,33 @@ public class __MecanumWheelDrive__ extends LinearOpMode
             }
             scout.armVerticalServo.setPower(servoPosition);
 
-            if(this.gamepad1.y) {
-                ArmVerticalPower -= 0.01;
-                if(ArmVerticalPower < -1) ArmVerticalPower = -1;
-            } else if(this.gamepad1.a) {
-                ArmVerticalPower += 0.01;
-                if(ArmVerticalPower > 1) ArmVerticalPower = 1;
+            if(this.gamepad2.y) {
+                scout.armServo2.setPower(-1);
+            } else if(this.gamepad2.a) {
+                scout.armServo2.setPower(0.3);
+            } else {
+                scout.armServo2.setPower(-0.065);
             }
-            scout.armServo2.setPower(ArmVerticalPower);
+
 
             if(this.gamepad2.x) {
-                if (HandIsOpen == true) {
                     scout.clawServo.setPosition(0); // NEEDS A VALUE FOR THE POSITION OF THE CLOSED CLAW!
-                    HandIsOpen = false;
-                    sleep(300);
-                } else if (HandIsOpen == false){
-                    scout.clawServo.setPosition(0.42); //NEEDS A VALUE FOR THE POSITION OF THE OPEN CLAW!
-                    HandIsOpen = true;
-                    sleep(300);
-                }
             }
 
+            if(this.gamepad2.b) {
+                scout.clawServo.setPosition(0.42); // NEEDS A VALUE FOR THE POSITION OF THE CLOSED CLAW
+            }
 
-            drive.StrafeDrive(stickDrive, turn, strafe);
+             leftPower    = -Range.clip(stickDrive - turn, -scout.MAX_DRIVING_POWER, scout.MAX_DRIVING_POWER);
+             rightPower   = -Range.clip(stickDrive + turn, -scout.MAX_DRIVING_POWER, scout.MAX_DRIVING_POWER);
+             strafePower = Range.clip(-strafe, -scout.MAX_DRIVING_POWER, scout.MAX_DRIVING_POWER);
+
+            scout.leftFrontWheelMotor.setPower(leftPower - strafePower);
+            scout.leftRearWheelMotor.setPower(leftPower + strafePower);
+            scout.rightFrontWheelMotor.setPower(rightPower + strafePower);
+            scout.rightRearWheelMotor.setPower(rightPower - strafePower);
+
+            //drive.StrafeDrive(stickDrive, turn, strafe);
             telemetry.addData("Status", "Running");
             telemetry.addData("Left Power", leftPower);
             telemetry.addData("Right Power", rightPower);

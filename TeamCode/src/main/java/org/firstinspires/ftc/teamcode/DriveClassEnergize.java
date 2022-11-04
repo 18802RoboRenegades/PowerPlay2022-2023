@@ -123,7 +123,7 @@ public class DriveClassEnergize {
         // ticksPerInch was 88
         // ticksPerInch was 83
 
-        int ticksPerInch = 16;
+        int ticksPerInch = 28;
 
         scout.leftFrontWheelMotor.getCurrentPosition();
         scout.rightFrontWheelMotor.getCurrentPosition();
@@ -190,6 +190,10 @@ public class DriveClassEnergize {
         } else if (putAtrueBooleanHere == false){
             scout.clawServo.setPosition(0.42); //NEEDS A VALUE FOR THE POSITION OF THE OPEN CLAW!
         }
+    }
+
+    public void ClawwwOpen() {
+        scout.clawServo.setPosition(0.42);
     }
 
     public void trapdoorOpen() {

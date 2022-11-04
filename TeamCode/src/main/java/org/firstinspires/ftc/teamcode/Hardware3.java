@@ -85,5 +85,7 @@ public class Hardware3 {
         clawServo.setPosition(0);
         trapdoorServo.setPosition(0);
 
+        // init code
+
     }
 }
